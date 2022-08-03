@@ -12,8 +12,6 @@ app.use(express.static("public"));
 
 app.use(bodyParser.urlencoded({extended: true}));
 
-const port = 3000;
-
 
 
 mongoose.connect("mongodb+srv://admin-chux:Venture07@cluster0.ybhggkh.mongodb.net/todolistDB", { useNewUrlParser: true });
@@ -147,6 +145,13 @@ app.get("/:customList", function(req, res){
 });
 
 
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 3000;
+}
+app.listen(port);
+
+
 app.listen(port, function(){
-  console.log("Server is running on port " + port);
+  console.log("Server has started running successfully");
 });
