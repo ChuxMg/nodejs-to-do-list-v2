@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const ejs = require("ejs");
 const mongoose = require("mongoose");
 const _ = require("lodash");
 
@@ -51,7 +52,7 @@ const List = mongoose.model("List", listSchema);
 app.get("/", function(req, res){
 
   Item.find({}, function(err, foundItems) {
- 
+
     if (foundItems.length === 0) {
       Item.insertMany(defaultItems, function(err) {
         if (err) {
@@ -104,7 +105,7 @@ app.post("/delete", function(req, res){
         console.log("Successfully deleted item from document");
         res.redirect("/");
       }
-      
+
     });
   } else {
     List.findOneAndUpdate({name: listName}, {$pull: {items: {_id: checkedId}}}, function(err, foundList) {
@@ -149,8 +150,6 @@ let port = process.env.PORT;
 if (port == null || port == "") {
   port = 3000;
 }
-app.listen(port);
-
 
 app.listen(port, function(){
   console.log("Server has started running successfully");
